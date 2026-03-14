@@ -1,6 +1,7 @@
 ﻿using DVLDBuisnessLayer.NationalityCountry;
 using DVLDDataAccessLayer;
 using System;
+using System.Data;
 
 
 
@@ -163,6 +164,12 @@ namespace DVLDBuisnessLayer.Peaple
 
             }
             return isFound;
+        }
+
+
+        public static DataTable getAllPersons()
+        {
+            return PersonAccessLayer.GetAllPeople();
         }
 
 
