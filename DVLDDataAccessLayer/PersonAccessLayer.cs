@@ -494,10 +494,62 @@ namespace DVLDDataAccessLayer
         }
 
 
+        public static DataTable GetAllPeople()
+        {
+
+            SqlConnection connection = new SqlConnection(DataAccessLayerSettings.ConnectionString);
+            string query = @"SELECT * FROM People";
+            SqlCommand command = new SqlCommand(query, connection);
+            SqlDataReader reader = command.ExecuteReader();
+            DataTable peapleDataTable = new DataTable();
+            try
+            {
+                connection.Open();
+              
 
 
+                while (reader.Read())
+                {
+                    peapleDataTable.Rows.Add(
+                         reader["PersonID"],
+                         reader["NationalNo"],
+                         reader["FirstName"],
+                         reader["SecondName"],
+                         reader["ThirdName"],
+                         reader["LastName"],
+                         reader["DateOfBirth"],
+                         reader["Gendor"],
+                         reader["Address"],
+                         reader["Phone"],
+                         reader["Email"],
+                         reader["NationalityCountryID"]);
+                    if (reader["ImagePath"] != DBNull.Value)
+                    {
+                        peapleDataTable.Rows.Add(reader["ImagePath"]);
+                    }
+                    else
+                    {
+                        peapleDataTable.Rows.Add("");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving people", ex);
+            }
+            finally
+            {
+                connection.Close();
+                command.Dispose();
+            }
+            return peapleDataTable;
 
 
+      
+        }
+    
+    
     }
 
 
